@@ -1,0 +1,12 @@
+<%=	render 'tasks/maket'  %>
+<% provide(:title, 'Котегории') %>
+<div class="login-page">
+  <div class="form">
+    <h2 class="form-signin-heading">Добавления категории</h2>
+    <%= form_for(@cat,  url:'/cy') do |f| %>
+        <%= f.text_field :name,placeholder: 'Названия категории' %>
+        <%= f.submit 'Добавить', class: "button" %>
+    <% end %>
+    <%= render 'tables' %>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<%=	render 'tests/maket'  %>
+<div class="container">
+  <div class="login-page">
+    <div class="form">
+      <%
+        tl=Test.select(:id,:name).having("tests.id not in (SELECT DISTINCT test_id FROM tpublics)") rescue nil?
+      %>
+        <%= form_tag(tpn_path, :method => "post",:id=>'tpf') do %>
+          <%=select_tag :tid, options_from_collection_for_select(tl, "id", "name") %>
+         <%= text_field_tag(:count ,nil,placeholder: 'количество вариантов' ) %>
+          <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>
+        Категории
+      </th>
+      <th>
+        количество
+      </th>
+      <th>
+        Ввод
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <%
+      tp=Cat.joins(:tasks).select('cats.id as cats_id,cats.name as cats_name,count(tasks.id)as count_task_id').group('cats.name')
+      tp.each do |cat| %>
+        <tr>
+          <td>
+            <abbr title=" <%= cat.cats_name %>" > <h5><%= cat.cats_name[0..8] %></h5> </abbr>
+          </td>
+          <td>
+           <h5> <%= cat.count_task_id %></h5>
+          </td>
+          <td>
+            <h5>
+              <%= text_field_tag("cat#{cat.cats_id}",0,placeholder: 'число' ) %>
+            </h5>
+          </td>
+        </tr>
+    <%end %>
+    </tbody>
+  </table>
+ <%= submit_tag( "генерировать", class: "button") %>
+ <% end %>
+    </div>
+</div>
+</div>

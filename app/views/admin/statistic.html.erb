@@ -1,0 +1,85 @@
+<%=	render 'maket'  %>
+<div style="margin-top: 5%;margin-left: 7%;margin-right: 7%;" class="page-content inset">
+  <div class="row">
+    <table  class="table table-hover">
+      <thead>
+      <tr>
+        <th>ФИ</th>
+        <th>Названия теста</th>
+        <th>Дата прохождения</th>
+        <th>Варант</th>
+        <th>Вопрос</th>
+        <th>Ответ</th>
+        <th>Оценка</th>
+        <th>Макс_оценка</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%
+         @statistic.each do |test| %>
+          <tr>
+            <td>
+              <%User.select(:fname,:lname).where("id=#{test.user_id}").each do |f|%>
+                <abbr title="<%= f.lname%>&#13;<%=f.fname%>">
+                 <h5>
+                  <%= f.lname+'   '+f.fname[0]+'.'%>
+                </h5>
+                </abbr>
+              <%	 end %>
+            </td>
+          <td>
+            <%Test.select(:name,:description).where("id=#{test.test_id}").each do |f|%>
+                <abbr title="<%= f.name%>&#13;<%=f.description%>">
+                  <h5>
+                    <%= f.name%>
+                  </h5>
+                </abbr>
+            <%end%>
+          </td>
+            <%Tu.select(:option,:created_at).where("user_id=#{test.user_id} and test_id=#{test.test_id}").each do |f|%>
+                <td>
+                  <h5>
+                    <%= f.created_at.strftime("%e-%m-%Y  %k:%M")%>
+                  </h5>
+                </td>
+                <td>
+                  <h5>
+                    <%= f.option%>
+                  </h5>
+                </td>
+            <%end%>
+
+              <%tes=Task.select(:ask,:answer,:mark).where("id=#{test.task_id}").each do |f|%>
+                <td>
+                  <abbr title="<%= f.ask%>">
+                    <h5>
+                      <textarea style="border		: none;"><%=f.answer%></textarea>
+                    </h5>
+                  </abbr>
+                </td>
+                <%end%>
+            <td>
+              <h5>
+                <textarea style="border		: none;"><%=test.answer%></textarea>
+              </h5>
+            </td>
+            <td>
+              <h5>
+                <%=	test.mark  %>
+              </h5>
+            </td>
+            <%tes.each do |d|%>
+                <td>
+                  <abbr title="Оценка автора">
+                    <h5>
+                      <%=d.mark%>
+                    </h5>
+                  </abbr>
+                </td>
+            <%end%>
+      <%end%>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<%= render 'layouts/sts' %>
+<style>
+  html{
+    background: #bbbbbb;
+
+  }ul{
+     list-style-type:none;
+   }
+
+</style>
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%=link_to 'SQL тренер Админ', admin_path,method: :get,:class=> "navbar-brand"	  %>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <%=link_to 'Создать тест',tsn_path ,method: :get	  %>
+        </li>
+        <li>
+          <%= @use= 'Cписок тестов'
+              link_to @use,tsl_path , method: :get	%>
+        </li>
+        <li>
+          <%= @use= 'Генерировать варианты'
+              link_to @use,tpn_path,method: :get	%>
+        </li>
+               <li>
+                 <%= link_to "Выйти ".html_safe, signout_path, method: :get   %>
+               </li>
+      </ul>
+    </div>
+  </div>
+</nav>

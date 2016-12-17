@@ -1,0 +1,27 @@
+<%= render 'layouts/scrip' %>
+<section class="section">
+    <div class="row">
+      <h1 class="text-center">Система тестирования студентов</h1>
+      <div class="col-sm-4 col-sm-offset-2">
+        <h5><strong>SQL TRENER<br></strong></h5>
+        <p>
+          Данная система тестирует студентов на знания языка запросов SQL.
+        </p>
+        <p>
+          Система проверяет студентов в режиме реального времени. Пользователь вводить
+          запрос и получает ответ.
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <h5><strong>SQL TRENER<br></strong></h5>
+        <p>
+          Тесты назначаются только автором.
+          Предлагается удобный интерфейс для автора и пользователей.
+        </p>
+        <p>
+          Если вы хотите пройти тест, то вы должны <%=link_to 'войти',signin_path,method: :get %>  в систему.
+        </p>
+      </div>
+    </div>
+</section>
+

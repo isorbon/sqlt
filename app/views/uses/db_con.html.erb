@@ -1,0 +1,24 @@
+<%= render 'admin/maket' %>
+<div class="container-fluid">
+  <div class="row content">
+<div class="login-page">
+  <div class="form">
+        <%= form_tag('db', :method => "post",:id=>'dbv' ) do  %>
+        <%= select_tag :dtp,"<option value='0' >присоединить бд</option>
+        <option value='#{enc('sj1')}'>Основной</option>
+        <option value='#{enc('sj2')}'>Теневой</option>".html_safe%>
+        <%= select_tag :gemn, "<option value='0'>Выберите  субд</option>
+        <option value='mysql2'>Mysql</option>
+        <option value='pg'>postgres</option>
+        <option value='oracle'>oracle_enhanced</option>
+        <option value='Sql Server'>sql_server</option>".html_safe%>
+        <%= text_field_tag(:user_name ,nil,placeholder: 'Имя пользователя') %>
+        <%= password_field_tag(:password ,nil,placeholder: 'Пароль') %>
+        <%= text_field_tag(:host ,nil,placeholder: 'Имя хоста') %>
+        <%= text_field_tag(:db ,nil,placeholder: 'Имя бд') %>
+        <%= submit_tag( "Подключить", class: "button") %>
+        <%end%>
+  </div>
+  </div>
+  </div>
+</div>

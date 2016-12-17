@@ -1,0 +1,64 @@
+<%=	render 'maket'  %>
+<div style="margin-left: 7%;margin-right: 7%;" class="page-content inset">
+  <div class="row">
+ <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>
+        №
+      </th>
+      <th>
+        Названия
+      </th>
+      <th>
+        Описания
+      </th>
+      <th>
+        Дата начало
+      </th>
+      <th>
+        Статус
+      </th>
+      <th>Количество</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%@tests.each do |cat| %>
+        <tr>
+          <td>
+              <abbr title="Редактировать"><h5><%= link_to  "#{cat.id}" , tse_path(enc( cat.id.to_s)),method: :post %></h5></abbr>
+          </td>
+          <td>
+            <abbr title="<%= cat.name %>"><h5><%= cat.name[0,15] %></h5></abbr>
+          </td>
+          <td>
+            <abbr title="<%= cat.description %>"><h5><%= cat.description[0,15] %></h5></abbr>
+          </td>
+          <td>
+            <h5><%= cat.start_t.strftime("%e-%m-%Y  %k:%M")%> </h5>
+          </td>
+          <td>
+            <% if  cat.active == true %>
+               <h5>доступен </h5>
+            <%else %>
+                <h5> недоступен </h5>
+            <%end %>
+          </td>
+          <td>
+            <abbr title="Количество вариантов"><h5><%= Tpublic.where("test_id=#{cat.id}").distinct.count("option")%> </h5> </abbr>
+          </td>
+          <td>
+            <h5> <%= link_to  "Удалить" ,tsd_path(enc( cat.id.to_s)),method: :delete, data: { confirm: 'Вы уверены?' } %></h5>
+          </td>
+        </tr>
+    <%end%>
+    </tbody>
+  </table>
+    <div style="margin-left: 35%;margin-right: 35%" class="pagination">
+      <%= will_paginate @test %>
+    </div>
+  </div>
+</div>
+
+

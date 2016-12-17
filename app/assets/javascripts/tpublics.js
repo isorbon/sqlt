@@ -1,0 +1,1 @@
+$(function(){$("#tpf").validate({ignore:".ignore",rules:{count:{required:!0}},submitHandler:function(a){a.submit()}})});

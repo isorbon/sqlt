@@ -1,0 +1,78 @@
+<div style="margin-left: 7%;margin-right: 7%;" class="page-content inset">
+  <div class="row">
+    <table class="table table-hover">
+    <thead>
+    <tr>
+          <th>
+      №
+          </th>
+      <th>
+        Вопрос
+      </th>
+      <th>
+        Ответ
+      </th>
+      <th>
+        Категория
+      </th>
+      <th>
+      Оценка
+      </th>
+      <th>
+      Автор
+      </th>
+      <th>
+        Время
+      </th>
+      <th>
+        Действия
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <%
+      @tasks.each do |cat| %>
+        <tr>
+          <td>
+            <abbr title="Редактировать"><h5><%=
+              link_to  "#{cat.id}" ,te_path(enc(cat.id.to_s)),method: :post %>
+            </h5></abbr>
+          </td>
+          <td>
+            <abbr title="<%= cat.ask %>"><h5><%= cat.ask[0,15] %></h5></abbr>
+          </td>
+          <td>
+            <abbr title="<%= cat.answer %>"><h5><%= cat.answer[0,15] %></h5></abbr>
+          </td>
+          <td>
+            <h5><%= cat.name %></h5>
+          </td>
+          <td>
+            <h5>
+              <%= cat.mark %>
+            </h5>
+          </td>
+          <td>
+            <h5>
+              <%=cat.ul.to_s+' '+cat.uf[0].to_s+'.' %>
+            </h5>
+          </td>
+          <td>
+            <h5>
+              <%= cat.time %>
+            </h5>
+          </td>
+          <td>
+            <h5>
+              <%= link_to  "Удалить" ,td_path(enc(cat.id)), method: :delete, data: { confirm: 'Вы уверены?' }  %>
+           </h5>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+  <div style="margin-left: 35%;margin-right: 35%" class="pagination">
+    <%= will_paginate @tables %>
+  </div>
+</div>

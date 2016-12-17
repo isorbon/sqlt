@@ -1,0 +1,111 @@
+<%= render 'layouts/scrip' %>
+<% @user = current_user  %>
+  <div id="page-content-wrapper" style="margin-top: 5%;">
+    <div class="page-content inset">
+      <div class="row">
+        <div class="col-md-3 col-sm-3">
+          <div class="user-wrapper" style="text-align: center;">
+            <img src="<%=@user.img%>" class="img-responsive" />
+            <div class="description">
+              <abbr  title="<%= @user.fname+' '+@user.lname[0..10] %>" ><h3 style="text-align: center"><%= @user.fname[0..10]+' '+@user.lname %></h3></abbr>
+              <h5> <strong>login:<%= @user.login%>  </strong></h5>
+              <hr />
+              <%= link_to 'Редактировать'.html_safe, ue_path(enc(@user.id)),class: "btn btn-danger btn-sm",method: :post %>
+              <button  onclick="getinfo_()" class="btn btn-danger btn-sm" >Мои оценки</button>
+              <%= link_to 'Список тестов'.html_safe, im_path,class: "btn btn-danger btn-sm",method: :get %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 col-sm-9  user-wrapper"  >
+          <div class="description"  id="docx">
+            <h3 style="text-align: center"> Доступные тесты </h3>
+            <hr/>
+            <ul class="verticalCarouselGroup vc_list">
+              <% @test.each do|s|%>
+                  <li>
+                    <h4 ><%=s.name %></h4>
+                    <p><%=	s.description%>
+                    </p>
+                    <p>
+                      <%=	s.start_t.strftime("%e-%m-%Y  %k:%M")%>
+                    </p  >
+                    <p style="text-align: center">
+                      <%=  link_to 'Пройти', auth_path(enc(s.id)),method: :post%>
+                    </p>
+                  </li>
+              <%end %>
+            </ul>
+        </div>
+          <div style="margin-left: 35%;margin-right: 35%" class="pagination">
+            <%%>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  * {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+  .verticalCarousel {
+    margin: 50px auto;
+    max-width: 500px;
+    background-color: #f1f1f1;
+  }
+  .verticalCarouselHeader {
+    background: #e1e1e1;
+    border-width: 0px;
+    border-style: solid;
+    padding: 15px;
+  }
+  .verticalCarouselHeader:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+  .verticalCarouselHeader h3 {
+    float: left;
+    margin: 0px;
+  }
+  .verticalCarouselGroup.vc_list > li {
+    margin: 15px;
+    border-width: 0px;
+    border-style: solid;
+    padding: 15px;
+    -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .verticalCarouselGroup.vc_list > li h4 {
+    margin: 0px 0px 0px;
+  }
+
+  .verticalCarouselGroup.vc_list > li p {
+    margin: 0px 0px 0px;
+  }
+  .vc_container {
+    overflow: hidden;
+    -moz-transition: height 0.2s ease-in;
+    -o-transition: height 0.2s ease-in;
+    -webkit-transition: height 0.2s ease-in;
+    transition: height 0.2s ease-in;
+  }
+
+  .vc_list {
+    margin: 0;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    padding-bottom: 20px;
+    list-style: none;
+    -moz-transition: -moz-transform 0.2s ease-in;
+    -o-transition: -o-transform 0.2s ease-in;
+    -webkit-transition: -webkit-transform 0.2s ease-in;
+    transition: transform 0.2s ease-in;
+  }
+</style>
+

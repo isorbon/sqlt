@@ -1,0 +1,91 @@
+<%= render 'maket' %>
+<link rel="stylesheet" href="/css/editor.css" />
+<link rel="stylesheet" href="/css/font-awesome.min.css" >
+<link rel="stylesheet" href="/css/codemirror.css" />
+<script src="/js/editor.js"></script>
+<script src="/js/codemirror.js"></script>
+<script src="/js/sql.js"></script>
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+      </li>
+      <abr title="Таблицы подключенной бд">
+        <li>
+          <% $i = 0
+             while $i<Basic.connection.tables.length do%>
+              <h5>
+                <input  type="button" class="btn-link" value="<%=Basic.connection.tables[$i]%>" onclick="get_('select * from <%=Basic.connection.tables[$i]%> limit 50','#sqlr');" data-toggle="modal"data-target="#basicModal">
+              </h5>
+          <%
+            $i=$i+1
+            end %>
+        </li>
+      </abr>
+    </ul>
+  </div>
+  <div id="page-content-wrapper">
+    <div   class="content-header">
+      <h1>
+        <a id="menu-toggle" href="#" class="btn btn-default"><i class="icon-reorder"></i></a>
+      </h1>
+    </div>
+    <div class="page-content inset">
+      <%= form_for(@task,  url: tup_url(enc(@task.id)), class: "register-form" ) do |f| %>
+          <p>
+            <abbr title="Условия задачи"> <%= f.text_area :ask  %></abbr>
+          </p>
+          <p>
+            <abr title="Данный запрос будет использован для сравнения ответов."> <%=	f.text_area :answer%></abr>
+          </p>
+          <p style="text-align: center">
+            <input  type="button" class="btn btn-danger btn-sm" value="Проверить" onclick="get_(editor.getValue(),'#sqlr');" data-toggle="modal"
+                    data-target="#basicModal">
+
+          </p>
+          <abr title="Категории задач">
+            <%=f.select :cat_id,options_for_select(Cat.all.collect{ |u| [u.name,u.id]},selected:@task.cat_id )  %>
+          </abr>
+          <p>
+            <abr title="Оценка по пятибалльной системе">
+              <%= f.text_field :mark ,placeholder: 'Оценка' ,:class=>'form-group'%>
+            </abr>
+          </p>
+          <p>
+            <abr title="Время для выполнения данного запроса. Значения в секундах [0-999]">
+              <%= f.text_field :time ,placeholder: 'Время в секундах'%>
+            </abr>
+          </p>
+          <p style="text-align: center">
+            <%=f.submit'Обновить',:class=>"btn btn-danger btn-sm"	  %>
+          </p>
+      <%	end  %>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div  class="panel panel-default" style="overflow-x: auto;" id="sqlr">
+    </div>
+  </div>
+</div>
+<script>
+  function displayText(){
+    $("#task_ask").text($("#task_ask").Editor("getText"));
+  }
+  $(document).ready(function() {
+    var editor= $("#task_ask").Editor();
+    $('.Editor-editor').bind('DOMNodeInserted', function () {
+      displayText();
+    });
+    window.editor = CodeMirror.fromTextArea(document.getElementById('task_answer'), {
+      mode: 'text/x-mariadb',
+      indentWithTabs: true,
+      smartIndent: true,
+      lineNumbers: true,
+      matchBrackets: true,
+      autofocus: true,
+    });
+    $('.Editor-editor').html('<%=@task.ask.html_safe.gsub("'"){"\\'"}.html_safe %>');
+  });
+</script>

@@ -1,0 +1,54 @@
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>№</th>
+        <th>Названия теста</th>
+        <th>Дата прохождения</th>
+        <th>Вариант</th>
+        <th>Оценка</th>
+      </tr>
+      </thead>
+      <tbody >
+      <% $i=1
+        @marks.each do |mark|%>
+          <tr class="table">
+            <td>
+                <h5>
+                  <%=$i%>
+                </h5>
+            <td>
+              <%Test.select(:name,:description).where("id=#{mark.test_id}").each do |f|%>
+                  <abbr title="<%= f.name%>&#13;<%=f.description%>">
+                    <h5><%= f.name%></h5>
+                  </abbr>
+              <%	 end %>
+            </td>
+            <td>
+              <abbr title="Дата прохождения">
+                <h5>
+                  <%= mark.created_at.strftime("%e-%m-%Y  %k:%M")%>
+                </h5>
+              </abbr>
+            </td>
+            <td>
+              <abbr title="Вариант">
+                <h5>
+                  <%= mark.option%>
+                </h5>
+              </abbr>
+            </td>
+            <td>
+              <abbr title="Оценка">
+                <h5>
+                  <%tmp=Task.select(:id,:mark).joins(:inspections).where("inspections.test_id = #{mark.test_id.to_i} and inspections.user_id=#{current_user[:id].to_i}").sum(:mark) rescue nil?
+                  q = mark.mark/tmp.to_f*100
+                  %>
+                  <%="#{(q.round(1))}%"%>
+                </h5>
+              </abbr>
+            </td>
+          </tr>
+      <% $i=$i+1
+        end %>
+      </tbody>
+    </table>

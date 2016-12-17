@@ -1,0 +1,16 @@
+<%= render 'maket' %>
+<div class="login-page">
+  <div class="form">
+    <h2 class="form-signin-heading">Введите данные коректно</h2>
+    <%= form_for(@tests,url:tsn_path ) do |f|  %>
+        <%= f.text_field :name ,placeholder: 'Названия теста' %>
+        <%= f.text_field :description ,placeholder: 'Описания теста'%>
+        <abbr title="Когда будет доступен тест?">
+          <%=f.datetime_field :start_t,placeholder: 'Время старта'%>
+        </abbr>
+        <%= f.password_field :password ,placeholder: 'Пароль'%>
+        <abbr title="Статус теста" ><%=f.select :active,options_for_select([["доступен",true],["недоступен",false] ])  %></abbr>
+        <%= f.submit 'Добавить', class: "button" %>
+    <% end %>
+  </div>
+</div>

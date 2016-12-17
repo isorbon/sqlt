@@ -1,0 +1,46 @@
+<div style="margin-left: 7%;margin-right: 7%;" class="page-content inset">
+  <div class="row">
+<table  class="table table-hover">
+  <thead>
+  <tr>
+    <th>№</th>
+    <th>Названия</th>
+    <th>Дата прохождения</th>
+    <th>Количество варантов</th>
+    <th>Количество прошедших</th>
+  </tr>
+  </thead>
+  <tbody>
+  <%@statistic.each do |test| %>
+      <tr>
+        <td>
+          <h5>
+            <%= link_to "#{test.id}", f_statistic_path(test.id.to_i)%>
+          </h5>
+        </td>
+        <td>
+          <abbr title="<%=test.name%>&#13;<%=test.description%>">
+            <h5>
+              <%=test.name[0..15]%>
+            </h5>
+          </abbr>
+        </td>
+            <td>
+                <h5>
+                  <%=test.start_t.strftime("%e-%m-%Y  %k:%M")%>
+                </h5>
+           </td>
+        <td>
+          <h5>
+            <%= Tpublic.where("test_id=#{test.id.to_i}").distinct.count(:option)%>
+          </h5>
+        </td>
+        <td>
+          <h5><%=Tu.where("test_id=#{test.id.to_i}").distinct.count(:user_id)%> </h5>
+        </td>
+      </tr>
+  <%end%>
+  </tbody>
+</table>
+</div>
+</div>

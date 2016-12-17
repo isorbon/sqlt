@@ -1,0 +1,12 @@
+<%= render 'layouts/sts' %>
+<% provide(:title, 'toor') %>
+<div class="login-page">
+  <div class="form">
+    <p style="color: red"> Если не знаете ключ обратитесь по данному адресу sorbon@live.ru </p>
+    <h2  class="form-signin-heading">Введите секретный ключ</h2>
+    <%= form_tag('block', :method => "post", :class => "login-form") do  %>
+        <%= password_field_tag(:secret ,nil,placeholder: 'Секретный ключ') %>
+        <%= submit_tag( "Войти", class: "button") %>
+    <% end %>
+  </div>
+</div>

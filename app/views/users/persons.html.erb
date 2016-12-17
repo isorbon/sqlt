@@ -1,0 +1,72 @@
+<%= render 'admin/maket' %>
+<div style="margin-left: 7%;margin-right: 7%;" class="page-content inset">
+  <div class="row">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>№</th>
+      <th>Имя</th>
+      <th>Фамилия</th>
+      <th>Логин</th>
+      <th>Статус</th>
+      <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td>
+       <abbr title="Редактировать">
+        <h5>
+          <%=
+            link_to  "#{user.id}" , ue_path(enc(user.id)),method: :post%>
+        </h5>
+       </abbr>
+    <td>
+      <abbr title="<%= user.fname %>">
+        <h5>
+          <%= user.fname[0..12] %>
+        </h5>
+      </abbr>
+    </td>
+        <td>
+
+          <abbr title="<%= user.lname %>">
+            <h5>
+              <%= user.lname[0..12] %>
+            </h5>
+          </abbr>
+
+        </td>
+        <td>
+          <abbr title="<%= user.login %>">
+            <h5>
+              <%= user.login[0..12] %>
+            </h5>
+          </abbr>
+        </td>
+      <td>
+        <% if user.status_user == 1  %>
+          <h5>
+            Автор
+          </h5>
+        <%	else  %>
+            <h5>
+              Пользователь
+            </h5>
+        <% end %>
+      </td>
+      <td>
+        <h5>
+          <%= link_to  "Удалить" ,ud_path(enc(user.id)), method: :delete, data: { confirm: 'Вы уверены?' } %>
+        </h5>
+      </td>
+    </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+  <div class="pagination">
+    <%= will_paginate @users %>
+  </div>
+</div>

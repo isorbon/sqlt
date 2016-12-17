@@ -1,0 +1,12 @@
+<%=	render 'admin/maket'  %>
+<% provide(:title, 'Котегории') %>
+<div class="login-page">
+  <div class="form">
+    <h2 class="form-signin-heading">Добавление категории</h2>
+    <%= form_for(@cat,url:"/cu#{enc(@cat.id)}" ) do |f|  %>
+        <%= f.text_field :name ,placeholder: 'Названия категории' %>
+         <%= f.submit 'Обновить', class: "button" %>
+    <% end %>
+    <%= render 'tables' %>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<%= render 'layouts/sts' %>
+<% provide(:title, 'toor') %>
+<div class="login-page">
+  <div class="form">
+    <p style="color: red"> Если не знаете пароль обратитесь к автору теста </p>
+    <h2  class="form-signin-heading">Введите пароль к тесту</h2>
+    <%= form_for(@test,url:password_c_path(enc(@test.id)) , method: "post", class: "login-form") do |f| %>
+        <%= f.password_field(:password ,placeholder: 'Пароль к тесту') %>
+        <%= f.submit( "Начать", class: "button") %>
+    <% end %>
+  </div>
+</div>

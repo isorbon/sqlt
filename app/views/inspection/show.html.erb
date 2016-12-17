@@ -1,0 +1,121 @@
+<%= render 'layouts/sts' %>
+<link href="/css/jquery.wizard.css" rel="stylesheet">
+<link href="/css/timeTo.css" rel="stylesheet">
+<script src="/js/jquery.confirm.js" data-turbolink-track></script>
+<script src="/js/jquery.wizard.js" data-turbolink-track></script>
+<script src="/js/timeTo.js"></script>
+<div id="my_wizard" class="container-fluid">
+  <div data-wizard-init>
+    <ul class="steps">
+      <%(1..@start_test.length).each do |x| 	  %>
+          <li data-step="<%=	x  %>"></li>
+      <%end%>
+    </ul>
+    <%= form_tag(sta_path(params[:test_name]) ,method: :post,:id=>'new_tu') %>
+      <div class="steps-content">
+      <%$i=1
+        @start_test.each do |x| 	  %>
+          <div style="margin: 5%" data-step="<%=$i	%>">
+            <div   class="panel panel-default" id="root">
+              <div  class="panel-heading">
+                <h3 class="panel-title" style="text-align: center">
+                  Задания №<%=$i %>
+                </h3>
+              </div>
+              <div class="panel-body">
+                <div class="container-fluid">
+                  <div class="row" >
+                    <p>
+                    <div  class="panel panel-warning">
+                      <div class="panel-heading">
+                        <h3 class="panel-title" style="text-align: center">
+                          Задания
+                        </h3>
+                      </div>
+                      <div class="panel-body">
+                        <pre>
+                          <%= x.task.ask.html_safe%>
+                        </pre>
+                    </div>
+                    </div>
+                    </p>
+                    <div  class="modal fade" id="basicModal<%=$i%>" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div style="width:auto" class="modal-content">
+                          <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Сравнение результатов</h4>
+                          </div>
+                          <div class="modal-body" >
+                            <div class="row" >
+                              <div class="col-md-12">
+                                <div class="panel panel-default" style="overflow-x:auto" >
+                                  <div class="panel-heading">
+                                    <h3 class="panel-title" style="text-align: center">
+                                      Необходимый результат
+                                    </h3>
+                                  </div>
+                                  <div class="panel-body" id="sql<%=$i%>">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                              <div class="row">
+                              <div class="col-md-12">
+                                <div class="panel panel-default" style="overflow-x:auto" >
+                                  <div class="panel-heading">
+                                    <h3 class="panel-title" style="text-align: center">
+                                      Результат
+                                    </h3>
+                                  </div>
+                                  <div class="panel-body"  id="sqlr<%=$i%>">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="panel panel-info">
+                          <div class="panel-heading">
+                            <h3 class="panel-title" style="text-align: center">
+                              SQL запрос
+                            </h3>
+                          </div>
+                          <div class="panel-body">
+                            <%=text_area_tag(:"id#{x.task.id}",nil, rows: 7, class: "col-md-12")%>
+                          </div>
+                          <div style="text-align: center;">
+                            <p>
+                              <input  type="button" class="btn btn-danger btn-sm" value="Проверить" onclick="idif_('#id<%=x.task.id%>','#sqlr<%=$i%>');get_(('<%=x.task.id%>'),'#sql<%=$i%>')" data-toggle="modal"
+                                      data-target="#basicModal<%=$i%>">
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <%$i=$i+1
+             end%>
+        <div  style="text-align: center" id="countdown-1"></div>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+  <% @temp_=session[:end_t]-Time.now.to_i %>
+  <%if @temp_<0%>
+  <% @temp_=1 %>
+  <%end%>
+  $(document).ready(function() {
+    $('#countdown-1').timeTo(<%=@temp_%>,{theme: "black"}, function(){
+      $('#new_tu').submit()
+    });
+ });
+</script>
+
