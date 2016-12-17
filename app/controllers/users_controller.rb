@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
-  before_action :erse_oll ,only:[:marks,:show,:update,:new]
+  before_action :erse_oll ,only:[:marks,:show,:update]
   def marks
     @marks=Tu.where("tus.user_id=#{current_user[:id]}") rescue nil?
   end
