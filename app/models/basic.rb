@@ -1,3 +1,3 @@
 class Basic< ActiveRecord::Base
-  self.establish_connection(Use.find(1)[:db_base])
+  self.establish_connection(Use.find(1)[:db_base]) rescue nil?
 end
